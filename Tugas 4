@@ -1,1 +1,121 @@
 http://localhost/phpmyadmin/index.php?route=/database/structure&db=db_bank
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 13 Jun 2026 pada 15.50
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bank_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `memiliki`
+--
+
+CREATE TABLE `memiliki` (
+  `id_nasabah` int(11) NOT NULL,
+  `no_rekening` varchar(20) NOT NULL,
+  `tanggal_pembukaan` date DEFAULT NULL,
+  `status_kepemilikan` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `memiliki`
+--
+
+INSERT INTO `memiliki` (`id_nasabah`, `no_rekening`, `tanggal_pembukaan`, `status_kepemilikan`) VALUES
+(1, '123456', '2025-01-01', 'Utama'),
+(2, '654321', '2025-01-05', 'Utama');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `nasabah`
+--
+
+CREATE TABLE `nasabah` (
+  `id_nasabah` int(11) NOT NULL,
+  `nama` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `nasabah`
+--
+
+INSERT INTO `nasabah` (`id_nasabah`, `nama`) VALUES
+(1, 'Ahmad'),
+(2, 'Budi');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `rekening`
+--
+
+CREATE TABLE `rekening` (
+  `no_rekening` varchar(20) NOT NULL,
+  `saldo` decimal(15,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `rekening`
+--
+
+INSERT INTO `rekening` (`no_rekening`, `saldo`) VALUES
+('123456', 5000000.00),
+('654321', 3000000.00);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `memiliki`
+--
+ALTER TABLE `memiliki`
+  ADD PRIMARY KEY (`id_nasabah`,`no_rekening`),
+  ADD KEY `no_rekening` (`no_rekening`);
+
+--
+-- Indeks untuk tabel `nasabah`
+--
+ALTER TABLE `nasabah`
+  ADD PRIMARY KEY (`id_nasabah`);
+
+--
+-- Indeks untuk tabel `rekening`
+--
+ALTER TABLE `rekening`
+  ADD PRIMARY KEY (`no_rekening`);
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `memiliki`
+--
+ALTER TABLE `memiliki`
+  ADD CONSTRAINT `memiliki_ibfk_1` FOREIGN KEY (`id_nasabah`) REFERENCES `nasabah` (`id_nasabah`),
+  ADD CONSTRAINT `memiliki_ibfk_2` FOREIGN KEY (`no_rekening`) REFERENCES `rekening` (`no_rekening`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
